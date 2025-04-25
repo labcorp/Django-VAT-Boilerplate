@@ -17,7 +17,8 @@ An awesome boilerplate to kickstart your next project with Django, Vite, Alpine.
 4. [optional] Run `docker compose exec app python manage.py createsuperuser` to create admin user
 5. Profit...
 
-It will create 2 containers (front and back)
+It will create 2 containers (front and back)  
+**Tip**: Search for "awesome" is all files and change it with your new project's name.
 
 ## Debugging Django App in VSCode (.vscode folder included)
 Django App can be debugged attaching VSCode to the PTVSD server (launch.json is included in this boilerplate), so:
@@ -45,7 +46,5 @@ Django App can be debugged attaching VSCode to the PTVSD server (launch.json is 
 8. Profit...
 
 ---
-
-**Friend's tip**: Search for "awesome" is all files and change it with your new project's name.
 
 ### Questions?!
