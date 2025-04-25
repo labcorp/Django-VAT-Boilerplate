@@ -1,0 +1,12 @@
+[MASTER]
+load-plugins=pylint_django
+django-settings-module=conf.settings.development
+
+[MESSAGES CONTROL]
+disable=
+    missing-class-docstring,
+    missing-module-docstring,
+    missing-function-docstring,
+    bare-except,
+    import-outside-toplevel,
+    line-too-long

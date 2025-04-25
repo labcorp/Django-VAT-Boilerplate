@@ -1,0 +1,97 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.css");
+
+:root {
+    --djai-tab-bg: #2e2e2e !important;
+    --djai-tab-bg--hover: #242424 !important;
+
+    --djai-dropdown-bg: #242424 !important;
+    --djai-dropdown-fg: var(--header-link-color);
+}
+
+$tabs-border-radious: 6px;
+
+.popup .navigator-top-nav .breadcrumbs-container-inner {
+    display: flex;
+}
+
+.popup .navigator-top-nav .navigator-breadcrumbs-name-dropdown-wrapper {
+    display: flex;
+}
+
+.popup .navigator-top-nav .filter-filers-container-inner {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.filebrowser .navigator-list .column-action .action-button, .filebrowser .navigator-table .column-action .action-button {
+    background-clip: inherit !important;
+    padding: 3px 5px !important;
+    line-height: 35px;
+
+    &:hover {
+        background-color: rgb(251, 167, 40) !important;
+    }
+}
+
+.filebrowser .navigator-list .column-action .action-button span, .filebrowser .navigator-table .column-action .action-button span {
+    font-size: 12px !important;
+    vertical-align: inherit !important;
+    line-height: 33px !important;
+}
+
+.djai-dropdown-menu__item {
+    background-color: var(--djai-dropdown-bg) !important;
+    white-space: nowrap;
+    border-top-left-radius: $tabs-border-radious;
+    border-top-right-radius: $tabs-border-radious;
+
+    @media only screen and (max-width: 600px) {
+        border-radius: $tabs-border-radious !important;
+    }
+}
+
+.djai-dropdown-menu .djai-dropdown-menu__drop {
+    border-bottom-left-radius: $tabs-border-radious;
+    border-bottom-right-radius: $tabs-border-radious;
+}
+
+.filebrowser {
+    #container #content {
+        box-shadow: none !important;
+    }
+    .navigator-top-nav {
+        background-color: #fff;
+        border-bottom: 0;
+    }
+    .navigator-breadcrumbs {
+        padding-left: 30px;
+    }
+}
+
+
+.js-file-selector {
+    display: flex !important;
+}
+
+.filer-dropzone .filerFile {
+    left: 10px !important;
+
+}
+
+.filer-dropzone .filerFile a .image-preview {
+    margin-top: -10px !important
+}
+
+.filer-dropzone .filerFile img {
+    display: cover;
+    overflow: hidden;
+    border: 0 !important;
+}
+
+.filer-dropzone.filer-dropzone-mobile .dz-message {
+    margin-top: 0 !important;
+}
+
+form .form-row .filer-dropzone .filerFile .related-lookup {
+    margin-bottom: 25px !important;
+}

@@ -1,0 +1,67 @@
+{% load static %}
+{% load django_vite %}
+
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="cupcake">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ request.site.name }}{% block page_title %}{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 60%22><text y=%22.9em%22 font-size=%2280%22>🍕</text></svg>">
+
+    <meta name="description" content="{{ request.site.config.description }}" />
+    <meta name="author" content="@labCorp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#aabbcc">
+
+    {% block og %}
+    <meta property="og:url" content="{{ request.site.domain }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="{{ request.site.config.title }}"/>
+    <meta property="og:description" content="{{ request.site.config.description }}"/>
+    <meta property="og:image" content="{{ globals.project_url }}{% static 'images/bulx_og-logo.png' %}"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="@bulx_das">
+    <meta property="twitter:title" content="BULX">
+    <meta property="twitter:description" content="Digital Assets Store">
+    <meta property="twitter:image" content="{{ globals.project_url }}{% static 'images/bulx_og-logo' %}">
+    {% endblock og %}
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{ request.site.config.gtm_id }}');</script>
+    <!-- End Google Tag Manager -->
+
+    {% vite_hmr_client %}
+    {% vite_asset '_front/js/main.js' %}
+</head>
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ request.site.config.gtm_id }}"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+{% block countdown %}{% include 'includes/countdown.html' %}{% endblock countdown %}
+{% block header %}{% include 'includes/header.html' %}{% endblock header %}
+{% block content %}{% endblock content %}
+{% block footer %}{% include 'includes/footer.html' %}{% endblock footer %}
+
+<div class="debug bg-red-700 text-white text-sm p-3 rounded-lg">
+    <div class="hidden max-sm:block">X-Small (xm)</div>
+    <div class="hidden sm:max-md:block">Small (sm)</div>
+    <div class="hidden md:max-lg:block">Medium (md)</div>
+    <div class="hidden lg:max-xl:block">Large (lg)</div>
+    <div class="hidden xl:max-2xl:block">X-Large (xl)</div>
+    <div class="hidden 2xl:block">XX-Large (xxl)</div>
+</div>
+
+</body>
+</html>

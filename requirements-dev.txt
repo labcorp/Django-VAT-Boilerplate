@@ -1,0 +1,4 @@
+-r requirements.txt
+debugpy==1.8.14
+pylint
+pylint-django

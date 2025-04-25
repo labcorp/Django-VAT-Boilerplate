@@ -1,0 +1,11 @@
+{
+    "python.analysis.typeCheckingMode": "basic",
+    "reportIncompatibleVariableOverride": false,
+    "reportAttributeAccessIssue": false,
+    "reportArgumentType": false,
+    "reportOperatorIssue": false,
+    "reportIndexIssue": false,
+    "ignore": [
+        "**/migrations/*",
+    ]
+}

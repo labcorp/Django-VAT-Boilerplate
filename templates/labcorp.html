@@ -1,0 +1,29 @@
+{% load static %}
+{% load thumbnail %}
+{% load render_bundle from webpack_loader %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Developed by @labCorp</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 16%22><text y=%22.9em%22 font-size=%2225%22>🔴🟢🔵</text></svg>">
+
+    <meta name="description" content="Give us a call..." />
+    <meta name="author" content="@labCorp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#aabbcc">
+
+    {% render_bundle 'main' 'css' %}
+    {% render_bundle 'vendors' 'js' %}
+    {% render_bundle 'main' 'js' %}
+</head>
+<body class="d-flex flex-column h-100 labcorp">
+
+<div class="dots"></div>
+<h1><img src="{% static 'images/logo_labcorp.png' %}" alt="@labCorp" /></h1>
+
+</body>
+</html>

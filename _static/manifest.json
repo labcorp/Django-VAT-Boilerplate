@@ -1,0 +1,20 @@
+{
+  "_front/js/admin.js": {
+    "file": "dist/admin-KvvDrVmv.js",
+    "name": "admin",
+    "src": "_front/js/admin.js",
+    "isEntry": true,
+    "css": [
+      "dist/admin-DA8Vz0lm.css"
+    ]
+  },
+  "_front/js/main.js": {
+    "file": "dist/main-BGrQuU53.js",
+    "name": "main",
+    "src": "_front/js/main.js",
+    "isEntry": true,
+    "css": [
+      "dist/main-DB0CakhS.css"
+    ]
+  }
+}

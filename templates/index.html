@@ -1,0 +1,62 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load thumbnail %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<section class="container mx-auto" id="hero">
+<div class="h-[450px]">
+    <div class="hero bg-base-200 min-h-full">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">{{ request.site.name }}</h1>
+          <p class="py-6">
+            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
+            quasi. In deleniti eaque aut repudiandae et a id nisi.
+          </p>
+        </div>
+      </div>
+    </div>
+</div>
+</section>
+
+<section class="container mx-auto" id="highlights">
+    <div class="my-3">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-0 gap-y-3 lg:gap-3">
+          <div class="col-span-2 flex gap-3 h-auto lg:h-[650px]">
+              <c-fakes.content-card />
+              <c-fakes.content-card />
+          </div>
+          <div>
+              <div class="sticky top-3 container bg-base-200 h-[150px]"></div>
+          </div>
+      </div>
+    </div>
+</section>
+
+<section id="blog">
+    <div class="h-[400px] bg-base-200"></div>
+</section>
+
+<section id="other" class="container mx-auto">
+    <div class="container py-10">
+      <div class="mb-5">
+          <button class="btn btn-primary">Button</button>
+      </div>
+
+      <span x-data x-text="$now"></span>
+
+      <div>
+          <div class="flex flex-col">
+              <span x-data x-uppercase>Hello World, my dude!</span>
+          </div>
+      </div>
+
+      <div x-data="dropdown" class="pt-4">
+          <button @click="toggle" class="cursor-pointer rounded-lg p-3 bg-base-200 hover:bg-red-500 hover:text-white">toggle</button>
+          <div x-show="open" x-transition.opacity>dropdown</div>
+      </div>
+    </div>
+</section>
+{% endblock content %}

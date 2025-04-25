@@ -1,0 +1,16 @@
+{
+    "pylint.args": [
+        "--django-settings-module=conf.settings.development",
+        "--load-plugins", "pylint_django"
+    ],
+    "python.analysis.autoImportCompletions": true,
+    "debug.allowBreakpointsEverywhere": true,
+    "tailwindCSS.includeLanguages": {
+        "html": "html",
+        "javascript": "javascript",
+        "css": "css"
+    },
+    "editor.quickSuggestions": {
+        "strings": true
+    }
+}

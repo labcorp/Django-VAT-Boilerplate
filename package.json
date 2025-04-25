@@ -1,0 +1,23 @@
+{
+  "name": "awesome_app",
+  "version": "1.0.0",
+  "description": "Awesome Django, Vite, Alpine.js and Tailwind Boilerplate.",
+  "main": "vite.config.mjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "@labCorp",
+  "license": "ISC",
+  "devDependencies": {
+    "daisyui": "^5.0.27",
+    "sass-embedded": "^1.86.3",
+    "vite": "^6.3.2"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.4",
+    "alpinejs": "^3.14.9",
+    "tailwindcss": "^4.1.4"
+  }
+}
