@@ -8,6 +8,14 @@ An awesome boilerplate to kickstart your next project with Django, Vite, Alpine.
 > • Python >= 3.11.*   
 > • Docker setup is not ready for production, yet :)  
 
+### Installed django APPs
+ - Django REST Framework [[github]](https://github.com/encode/django-rest-framework)
+ - Django Cotton [[github]](https://github.com/wrabit/django-cotton)
+ - Django Vite [[github]](https://github.com/MrBin99/django-vite)
+ - Django Admin Interface [[github]](https://github.com/fabiocaccamo/django-admin-interface)
+ - DjangoQL [[github]](https://github.com/ivelum/djangoql)
+ - Django TinyMCE [[github]](https://github.com/jazzband/django-tinymce)
+ - Django Filer [[github]][(https://github.com/ivelum/djangoql](https://github.com/django-cms/django-filer))
 
 ## Docker (development)
 0. Rename `.env.example` > `.env` and update it
