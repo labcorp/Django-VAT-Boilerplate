@@ -1,4 +1,4 @@
-def portal_settings(request):
+def globals(request):
     context = {
 
     }

@@ -1,4 +1,4 @@
-name: cap-cms
+name: awesome_app
 
 services:
   front:

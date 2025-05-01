@@ -36,8 +36,7 @@ PROJECT_APPS = [
     'apps.core.apps.CoreConfig',
     'apps.account.apps.AccountConfig', # Custom User Model
     'apps.web.apps.WebConfig',
-    'apps.portal.apps.PortalConfig',
     'apps.content.apps.ContentConfig',
 ]
 
-TEMPLATES[0]['OPTIONS']['context_processors'].append('apps.portal.context_processors.portal_settings')
+TEMPLATES[0]['OPTIONS']['context_processors'].append('apps.core.context_processors.globals')

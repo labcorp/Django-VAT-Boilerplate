@@ -4,6 +4,10 @@
 
 	// List of extensions which should be recommended for users of this workspace.
 	"recommendations": [
+		"ms-python.python",
+		"ms-python.debugpy",
+		"ms-python.vscode-pylance",
+		"ms-azuretools.vscode-docker",
 		"bradlc.vscode-tailwindcss",
 		"twentyforty.django-cotton",
 		"batisteo.vscode-django",
