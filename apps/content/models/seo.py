@@ -15,7 +15,10 @@ SEO_FIELDSETS = (
 class AbstractSEOModel(models.Model):
     title = models.CharField(_('title'), max_length=128, blank=True)
     description = models.CharField(_('description'), max_length=255, blank=True)
-    image = FilerImageField(null=True, blank=True, related_name='seo_image', help_text=_('Default: 1200x630px. Will be resized'), on_delete=models.SET_NULL)
+    image = FilerImageField(null=True, blank=True,
+                            related_name='seo_image',
+                            on_delete=models.SET_NULL,
+                            help_text=_('Default: 1200x630px. Will be resized')) # type: ignore
 
     class Meta:
         abstract = True
