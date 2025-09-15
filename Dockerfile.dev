@@ -27,6 +27,7 @@ RUN apt update && \
 # UV
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 COPY pyproject.toml uv.lock /_lock/
+ENV UV_LINK_MODE=copy
 RUN --mount=type=cache,target=/root/.cache \
     cd /_lock && \
     uv sync \

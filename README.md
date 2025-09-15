@@ -5,7 +5,7 @@ An awesome boilerplate to kickstart your next project with Django, Vite, Alpine.
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
 
 > **IMPORTANT:**  
-> • Python >= 3.11.*   
+> • Python >= 3.13.* (UV can handle this)
 > • Docker setup is not ready for production, yet :)  
 
 ### Installed django APPs
