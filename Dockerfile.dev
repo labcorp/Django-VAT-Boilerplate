@@ -1,5 +1,5 @@
 # Step 1: Front
-FROM node:20-slim AS front
+FROM node:24.7-slim AS front
 
 WORKDIR /app
 COPY package.json .
@@ -9,7 +9,7 @@ COPY _front/ _front/
 EXPOSE 5173
 
 # Step 2: App
-FROM python:3.12.11-slim AS app
+FROM python:3.13.7-slim AS app
 
 WORKDIR /app
 
@@ -24,12 +24,14 @@ RUN apt update && \
     apt install -y \
     python3-dev
 
-RUN pip install --upgrade pip
-
-COPY requirements.txt .
-COPY requirements-dev.txt .
-
-RUN pip install --no-cache-dir -r requirements-dev.txt
+# UV
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+COPY pyproject.toml uv.lock /_lock/
+RUN --mount=type=cache,target=/root/.cache \
+    cd /_lock && \
+    uv sync \
+    --frozen \
+    --no-install-project
 
 COPY . .
 
