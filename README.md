@@ -21,8 +21,8 @@ An awesome boilerplate to kickstart your next project with Django, Vite, Alpine.
 0. Rename `.env.example` > `.env` and update it
 1. Run `docker compose build --no-cache`
 2. Run `docker compose up -d`
-3. Run first-time migrations with `docker compose run --rm app python manage.py migrate`
-4. [optional] Run `docker compose exec app python manage.py createsuperuser` to create admin user
+3. Run first-time migrations with `docker compose run --rm app uv run manage.py migrate`
+4. [optional] Run `docker compose exec app uv run manage.py createsuperuser` to create admin user
 5. Profit...
 
 It will create 2 containers (front and back)  
