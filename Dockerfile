@@ -4,7 +4,7 @@ FROM node:24.7-slim AS front
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN --mount=type=cache,target=/.npm \
-    set -ex && npm install -g npm@latest && npm install --clean
+    set -ex && npm install -g npm@latest && npm install
 
 COPY _front ./_front
 COPY vite.config.mjs ./
@@ -49,7 +49,6 @@ ENV LANG="pt_BR.UTF-8" \
 ENV DATABASE_URL="sqlite:///app.db" \
     SENTRY_DSN="https://0000000000000000000000000000000@000000000000000000.ingest.us.sentry.io/0000000000000000" \
     SECRET_KEY="change-me" \
-    PORT=80 \
     UV_LINK_MODE="copy"
 
 # Set production environment
@@ -73,7 +72,7 @@ COPY --from=front /app/_static /app/_static
 RUN mkdir -p _logs _media _static_collected
 
 RUN SECRET_KEY=s uv run manage.py collectstatic --clear --noinput
-RUN SECRET_KEY=s uv run manage.py compilemessages
+RUN SECRET_KEY=s uv run manage.py compilemessages --ignore .venv
 
 RUN useradd -ms /bin/bash app
 USER app:app
@@ -85,6 +84,6 @@ CMD ["gunicorn", \
      "--log-level", "error", \
      "--workers", "3", \
      "--timeout", "60", \
-     "--bind", "0.0.0.0:$PORT", \
+     "--bind", "0.0.0.0:80", \
      "--forwarded-allow-ips", "*", \
      "conf.wsgi:application"]
