@@ -15,7 +15,7 @@ An awesome boilerplate to kickstart your next project with Django, Vite, Alpine.
  - Django Admin Interface [[github]](https://github.com/fabiocaccamo/django-admin-interface)
  - DjangoQL [[github]](https://github.com/ivelum/djangoql)
  - Django TinyMCE [[github]](https://github.com/jazzband/django-tinymce)
- - Django Filer [[github]][(https://github.com/ivelum/djangoql](https://github.com/django-cms/django-filer))
+ - Django Filer [[github]](https://github.com/django-cms/django-filer)
 
 ## Docker (development)
 0. Rename `.env.example` > `.env` and update it
