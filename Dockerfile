@@ -1,50 +1,55 @@
-# Step 1: Front
-FROM node:20-alpine AS build-front
+# Stage 1: build the front-end assets with the same toolchain used in development
+FROM node:24.7-slim AS front-build
 
 WORKDIR /app
-COPY package.json webpack.config.js ./
-RUN yarn install
-COPY _front/ ./_front/
-RUN yarn build --mode production
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY _front ./_front
+COPY vite.config.mjs ./
+
+RUN npm run build
 
 ###
 
-# Step 2: Build App
-FROM python:3.13-slim AS build-app
+# Stage 2: build the Python application image
+FROM python:3.13.7-slim AS runtime
+
 WORKDIR /app
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYDEVD_DISABLE_FILE_VALIDATION=1
-ENV PYTHONUNBUFFERED=1
+ENV DATABASE_URL=sqlite:///app.db \
+    SECRET_KEY=change-me \
+    PYDEVD_DISABLE_FILE_VALIDATION=1 \
+    DJANGO_RUNSERVER_HIDE_WARNING=true \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    DOCKERED=1 \
+    DJANGO_SETTINGS_MODULE=conf.settings.production \
+    DEBUG=0 \
+    PORT=80 \
+    UV_LINK_MODE=copy
 
-RUN apt update && \
-    apt install -y \
-    python3-dev
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        python3-dev && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade pip
-COPY requirements.txt ./
-COPY requirements-dev.txt ./
-RUN pip install --no-cache-dir -r requirements-dev.txt
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-ENV DATABASE_URL="sqlite:///app.db" \
-    SECRET_KEY="unset" \
-    DJANGO_SETTINGS_MODULE="conf.settings.development" \
-    DEBUG=True \
-    PORT=8000
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev --no-install-project
 
-COPY . ./
+ENV PATH="/app/.venv/bin:$PATH"
 
-RUN mkdir -p /app/_static/dist
-RUN mkdir -p _logs
-RUN mkdir -p _media
+COPY . .
 
-COPY --from=build-front /app/_static/dist /app/_static/dist
+COPY --from=front-build /app/_static /app/_static
 
-RUN python manage.py collectstatic --clear --noinput
+RUN mkdir -p _logs _media _static_collected
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+EXPOSE 80
 
-EXPOSE 8000
 CMD ["gunicorn", \
      "--access-logfile", "/app/_logs/gunicorn_access.log", \
      "--log-level", "error", \
@@ -53,4 +58,3 @@ CMD ["gunicorn", \
      "--bind", "0.0.0.0:$PORT", \
      "--forwarded-allow-ips", "*", \
      "conf.wsgi:application"]
-#CMD python manage.py runserver 0.0.0.0:$PORT

@@ -30,6 +30,7 @@ EXTERNAL_APPS = [
     'easy_thumbnails',
     'tinymce',
     'adminsortable2',
+    'storages',
 ]
 
 PROJECT_APPS = [

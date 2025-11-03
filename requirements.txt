@@ -11,6 +11,7 @@ drf-spectacular
 django-environ
 django-vite
 django-admin-interface
+django-storages[boto3]
 Pillow
 easy-thumbnails
 django-filer
