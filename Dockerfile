@@ -72,7 +72,7 @@ COPY --from=front /app/_static /app/_static
 RUN mkdir -p _logs _media _static_collected
 
 RUN SECRET_KEY=s uv run manage.py collectstatic --clear --noinput
-RUN SECRET_KEY=s uv run manage.py compilemessages --ignore .venv
+RUN SECRET_KEY=s uv run manage.py compilemessages
 
 RUN useradd -ms /bin/bash app
 USER app:app
