@@ -2,11 +2,9 @@
 FROM node:24.7-slim AS front
 
 WORKDIR /app
-# copy package.json and package-lock.json if present (works on DigitalOcean build contexts)
-COPY package*.json ./
+COPY package.json package-lock.json ./
 RUN --mount=type=cache,target=/.npm \
-    set -ex && npm install -g npm@latest && \
-    if [ -f package-lock.json ]; then npm ci; else npm install; fi
+    set -ex && npm install -g npm@latest && npm install --clean
 
 COPY _front ./_front
 COPY vite.config.mjs ./
