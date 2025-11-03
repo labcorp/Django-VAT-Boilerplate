@@ -29,8 +29,6 @@ ipython_config.py
 .nvmrc
 
 # Front-end stuff
-yarn.lock
-package-lock.json
 node_modules/
 _media/
 _static/build/
