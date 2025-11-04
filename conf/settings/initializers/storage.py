@@ -125,7 +125,7 @@ if provider:
     # are served locally using Django's StaticFilesStorage. If USE_REMOTE_STATIC
     # is enabled, override to use the remote S3/Spaces backend.
     STORAGES['staticfiles'] = {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
     }
 
     # Optionally configure staticfiles to use remote storage too
@@ -133,7 +133,7 @@ if provider:
         static_base_url, static_domain_value = _domain_to_urls(static_custom_domain)
         static_base = static_base_url or bucket_base
         STORAGES['staticfiles'] = {
-            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+            'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
             'OPTIONS': {
                 'location': static_path,
                 'custom_domain': static_domain_value or None,
