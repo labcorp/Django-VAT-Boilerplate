@@ -45,19 +45,13 @@ ENV LANG="pt_BR.UTF-8" \
     DOCKERIZED=True \
     DEBUG=False
 
-# Other variables
-ENV DATABASE_URL="sqlite:///app.db" \
-    SENTRY_DSN="https://0000000000000000000000000000000@000000000000000000.ingest.us.sentry.io/0000000000000000" \
-    SECRET_KEY="change-me" \
-    UV_LINK_MODE="copy"
-
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+FROM base AS build
 
 COPY pyproject.toml uv.lock ./
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked --no-install-project --no-dev
-
-ENV PATH="/app/.venv/bin:$PATH"
 
 COPY . .
 COPY --from=front /app/_static /app/_static
@@ -67,8 +61,13 @@ RUN mkdir -p _static_collected
 RUN uv run manage.py collectstatic --clear --noinput
 RUN uv run manage.py compilemessages --ignore /app/.venv
 
+FROM base
+
 RUN useradd -ms /bin/bash app
 USER app:app
+
+COPY --from=build --chown=app:app /app /app
+ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 80
 
@@ -77,5 +76,6 @@ EXPOSE 80
 CMD ["gunicorn", \
     "conf.wsgi:application", \
     "--bind", "0.0.0.0:80", \
-    "--worker-tmp-dir", "/dev/shm", \
+    "--access-logfile", "-", \
+    "--error-logfile", "-", \
     "--forwarded-allow-ips", "*"]

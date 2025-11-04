@@ -9,12 +9,12 @@
     ]
   },
   "_front/js/main.js": {
-    "file": "dist/main-BGrQuU53.js",
+    "file": "dist/main-DjZCCt2m.js",
     "name": "main",
     "src": "_front/js/main.js",
     "isEntry": true,
     "css": [
-      "dist/main-DB0CakhS.css"
+      "dist/main-BLgxg1r3.css"
     ]
   }
 }
