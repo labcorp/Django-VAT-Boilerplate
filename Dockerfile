@@ -71,8 +71,8 @@ COPY --from=front /app/_static /app/_static
 
 RUN mkdir -p _logs _media _static_collected
 
-RUN SECRET_KEY=s uv run manage.py collectstatic --clear --noinput
-RUN SECRET_KEY=s uv run manage.py compilemessages
+RUN uv run manage.py collectstatic --clear --noinput
+RUN uv run manage.py compilemessages --ignore /app/.venv
 
 RUN useradd -ms /bin/bash app
 USER app:app
@@ -80,7 +80,6 @@ USER app:app
 EXPOSE 80
 
 CMD ["gunicorn", \
-     "--access-logfile", "/app/_logs/gunicorn_access.log", \
      "--log-level", "error", \
      "--workers", "3", \
      "--timeout", "60", \

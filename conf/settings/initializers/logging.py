@@ -56,14 +56,6 @@ logging.config.dictConfig({
             'filters': ['require_debug_true', ],
             'formatter': 'colored_full',
         },
-        'file': {
-            'level': 'INFO',
-            'filename': os.path.join(ROOT_DIR, '_logs/application.log'),
-            'class': 'logging.handlers.RotatingFileHandler',
-            'maxBytes': 1024*1024*5, # 5MB
-            'backupCount': 5,
-            'formatter': 'full',
-        },
         'database': {
             'level': 'WARNING',
             'filters': ['require_debug_false', ],
@@ -79,12 +71,12 @@ logging.config.dictConfig({
     'loggers': {
         'cms': {
             'level': 'DEBUG',
-            'handlers': ['console_full', 'file', 'database', ],
+            'handlers': ['console_full', 'database', ],
             'propagate': False
         },
         'django': {
             'level': 'WARNING',
-            'handlers': ['database', 'console_full', 'file', ],
+            'handlers': ['database', 'console_full', ],
             'propagate': False
         },
         'django.server': {

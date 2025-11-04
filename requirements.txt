@@ -20,3 +20,4 @@ djangoql
 markdown
 django-tinymce
 django-cotton
+whitenoise

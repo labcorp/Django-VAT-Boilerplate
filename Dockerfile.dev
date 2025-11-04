@@ -1,38 +1,39 @@
 # Step 1: Front
-FROM node:24.7-slim AS front
+FROM node:20-slim AS front
 
 WORKDIR /app
 COPY package.json .
+COPY package-lock.json .
 RUN npm install
 COPY _front/ _front/
 
 EXPOSE 5173
 
 # Step 2: App
-FROM python:3.13.7-slim AS app
+FROM python:3.11.12-slim AS app
 
 WORKDIR /app
 
 ENV PYDEVD_DISABLE_FILE_VALIDATION=1
-# Hide stupid django local server message for stupid users
-ENV DJANGO_RUNSERVER_HIDE_WARNING="true"
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV DJANGO_RUNSERVER_HIDE_WARNING="true"
 ENV DOCKERED=1
 
 RUN apt update && \
     apt install -y \
-    python3-dev
+    build-essential \
+    libcairo2-dev \
+    pkg-config \
+    python3-dev && \
+    rm -rf /var/lib/apt/lists/*
 
-# UV
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-COPY pyproject.toml uv.lock /_lock/
-ENV UV_LINK_MODE=copy
-RUN --mount=type=cache,target=/root/.cache \
-    cd /_lock && \
-    uv sync \
-    --frozen \
-    --no-install-project
+RUN pip install --upgrade pip
+
+COPY requirements.txt .
+COPY requirements-dev.txt .
+
+RUN pip install --no-cache-dir -r requirements-dev.txt
 
 COPY . .
 
