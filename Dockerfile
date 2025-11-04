@@ -65,7 +65,7 @@ COPY --from=front /app/_static /app/_static
 RUN mkdir -p _static_collected
 
 RUN uv run manage.py collectstatic --clear --noinput
-RUN uv run manage.py compilemessages --ignore /app/.venv
+RUN uv run manage.py compilemessages --ignore .venv
 
 FROM base
 
