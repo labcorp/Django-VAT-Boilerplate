@@ -51,13 +51,6 @@ ENV DATABASE_URL="sqlite:///app.db" \
     SECRET_KEY="change-me" \
     UV_LINK_MODE="copy"
 
-# Set production environment
-ENV LANG="pt_BR.UTF-8" \
-    LC_ALL="pt_BR.UTF-8" \
-    DJANGO_SETTINGS_MODULE="conf.settings.production" \
-    DOCKERIZED=True \
-    DEBUG=False
-
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 COPY pyproject.toml uv.lock ./
@@ -69,7 +62,7 @@ ENV PATH="/app/.venv/bin:$PATH"
 COPY . .
 COPY --from=front /app/_static /app/_static
 
-RUN mkdir -p _logs _media _static_collected
+RUN mkdir -p _static_collected
 
 RUN uv run manage.py collectstatic --clear --noinput
 RUN uv run manage.py compilemessages --ignore /app/.venv
@@ -79,10 +72,10 @@ USER app:app
 
 EXPOSE 80
 
+# assumes the server is running behind a reverse proxy (Nginx, AWS ALB, etc.)
+# set the `WEB_CONCURRENCY` environment variable to the number of workers you'd like to run
 CMD ["gunicorn", \
-     "--log-level", "error", \
-     "--workers", "3", \
-     "--timeout", "60", \
-     "--bind", "0.0.0.0:80", \
-     "--forwarded-allow-ips", "*", \
-     "conf.wsgi:application"]
+    "conf.wsgi:application", \
+    "--bind", "0.0.0.0:80", \
+    "--worker-tmp-dir", "/dev/shm", \
+    "--forwarded-allow-ips", "*"]

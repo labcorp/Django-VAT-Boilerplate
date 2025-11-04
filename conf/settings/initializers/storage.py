@@ -133,7 +133,7 @@ if provider:
         static_base_url, static_domain_value = _domain_to_urls(static_custom_domain)
         static_base = static_base_url or bucket_base
         STORAGES['staticfiles'] = {
-            'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage',
+            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
             'OPTIONS': {
                 'location': static_path,
                 'custom_domain': static_domain_value or None,

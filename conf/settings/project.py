@@ -11,7 +11,7 @@ from conf.settings.initializers.tinymce import *
 from conf.settings.initializers.filer import *
 from conf.settings.initializers.thumbnails import *
 from conf.settings.initializers.cotton import *
-from conf.settings.initializers.s3 import *
+from conf.settings.initializers.storage import *
 
 
 PROJECT_NAME = 'Awesome Project'

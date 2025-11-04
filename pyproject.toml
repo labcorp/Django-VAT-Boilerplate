@@ -27,4 +27,5 @@ dependencies = [
     "psycopg2-binary>=2.9.10",
     "pytz==2025.2",
     "tzdata==2025.2",
+    "whitenoise>=6.11.0",
 ]
