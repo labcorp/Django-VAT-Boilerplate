@@ -45,6 +45,12 @@ ENV LANG="pt_BR.UTF-8" \
     DOCKERIZED=True \
     DEBUG=False
 
+# Other variables
+ENV DATABASE_URL="sqlite:///app.db" \
+    SENTRY_DSN="https://0000000000000000000000000000000@000000000000000000.ingest.us.sentry.io/0000000000000000" \
+    SECRET_KEY="change-me" \
+    UV_LINK_MODE="copy"
+
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 FROM base AS build
