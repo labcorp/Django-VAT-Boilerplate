@@ -3,6 +3,8 @@ FROM node:24.7-slim AS front
 
 WORKDIR /app
 COPY package.json package-lock.json ./
+COPY templates/ ./templates/
+
 RUN --mount=type=cache,target=/.npm \
     set -ex && npm install -g npm@latest && npm install
 
