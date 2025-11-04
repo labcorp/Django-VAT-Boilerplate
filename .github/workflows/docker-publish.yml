@@ -42,7 +42,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/django-vat-boilerplate:latest
-            ghcr.io/django-vat-boilerplate:${{ github.sha }}
+            ghcr.io/labcorp/django-vat-boilerplate:latest
+            ghcr.io/labcorp/django-vat-boilerplate:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

@@ -1,7 +1,34 @@
+# Git
 .git
 .gitignore
+
+# Python
 .venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Node
 node_modules/
+npm-debug.log
+
+# Temp / logs
 temp/
 *.log
+*.sqlite3
+
+# OS
 *.DS_Store
+
+# Editors
+.vscode/
+.idea/
+
+# Build/static artifacts
+_build/
+_static_collected/
+_static/
+
