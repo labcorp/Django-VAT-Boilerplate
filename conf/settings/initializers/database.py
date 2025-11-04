@@ -7,7 +7,7 @@ from conf.settings.base import ENV
 db = ENV.db()
 dockered = os.environ.get('DOCKERED', False)
 
-if dockered:
+if dockered and False:
     db['HOST'] = 'db'
 
 DATABASES = {

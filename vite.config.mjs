@@ -21,6 +21,7 @@ export default defineConfig({
         manifest: "manifest.json",
         outDir: resolve("./_static"),
         assetsDir: 'dist',
+        emptyOutDir: false,
         rollupOptions: {
             input: {
                 main: resolve("./_front/js/main.js"),
