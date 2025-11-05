@@ -21,12 +21,13 @@ RUN npm run build
 ###
 
 # Stage 2: build the Python application image
-FROM python:3.14-slim AS base
+FROM python:3.13.7-slim AS base
 
 WORKDIR /app
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+        gettext \
         tzdata \
         locales \
         ca-certificates && \
@@ -63,7 +64,6 @@ FROM base AS build
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        gettext \
         build-essential \
         python3-dev && \
     rm -rf /var/lib/apt/lists/*
@@ -98,18 +98,17 @@ EXPOSE 80
 
 # assumes the server is running behind a reverse proxy (Nginx, AWS ALB, etc.)
 # set the `WEB_CONCURRENCY` environment variable to the number of workers you'd like to run
-CMD gunicorn \
-    conf.wsgi:application \
-    --bind 0.0.0.0:80 \
-    --worker-class gthread \
-    --workers 4 \
-    --threads 4 \
-    --timeout 60 \
-    --graceful-timeout 30 \
-    --max-requests 2000 \
-    --max-requests-jitter 200 \
-    --access-logfile - \
-    --error-logfile - \
-    --log-level info \
-    --forwarded-allow-ips "*" \
-    --worker-tmp-dir /dev/shm
+CMD ["gunicorn", \
+    "conf.wsgi:application", \
+    "--bind", "0.0.0.0:80", \
+    "--worker-class", "gthread", \
+    "--workers", "4", \
+    "--threads", "4", \
+    "--timeout", "60", \
+    "--graceful-timeout", "30", \
+    "--max-requests", "2000", \
+    "--max-requests-jitter", "200", \
+    "--access-logfile", "-", \
+    "--error-logfile", "-", \
+    "--log-level", "info", \
+    "--forwarded-allow-ips", "*"]
