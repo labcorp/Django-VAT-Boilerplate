@@ -6,8 +6,8 @@ An awesome boilerplate to kickstart your next project with Django, Vite, Alpine.
 ![Disclaimer](https://img.shields.io/badge/use_at_your_own_risk-no_guarantee-red)
 
 > **IMPORTANT:**  
-> • Python >= 3.14.* (UV can handle this)
-> • Docker setup is not ready for production, yet :)  
+> • Python >= 3.14.* (UV can handle this)  
+> • PostgreSQL >= 16 (External DB recommended for production)
 
 ### Installed django APPs
  - Django REST Framework [[github]](https://github.com/encode/django-rest-framework)
