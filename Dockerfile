@@ -1,3 +1,6 @@
+# syntax=docker/dockerfile:1
+# check=skip=SecretsUsedInArgOrEnv
+
 # Stage 1: build the front-end assets with the same toolchain used in development
 FROM node:24.7-slim AS front
 
@@ -32,27 +35,16 @@ RUN apt-get update && \
         ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
+# Set build envs
+ENV LANG="pt_BR.UTF-8" \
+    LC_ALL="pt_BR.UTF-8" \
+    TZ="America/Sao_Paulo"
+
 # Configure timezone and locale without reconfiguring the entire system
 RUN ln -snf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime && \
     echo "America/Sao_Paulo" > /etc/timezone && \
     localedef -i en_US -f UTF-8 en_US.UTF-8 && \
     localedef -i pt_BR -f UTF-8 pt_BR.UTF-8
-
-# Set python/runtime environment variables
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    UV_LINK_MODE="copy"
-
-# Set production defaults (placeholders; real values must come from runtime env)
-ENV LANG="pt_BR.UTF-8" \
-    LC_ALL="pt_BR.UTF-8" \
-    TZ="America/Sao_Paulo" \
-    DJANGO_SETTINGS_MODULE="conf.settings.production" \
-    DOCKERIZED=True \
-    DEBUG=False \
-    DATABASE_URL="sqlite:///app.db" \
-    SENTRY_DSN="https://0000000000000000000000000000000@000000000000000000.ingest.us.sentry.io/0000000000000000" \
-    SECRET_KEY="change-me"
 
 # Copy the 'uv' tool from the upstream image (requires BuildKit and support for
 # --mount and --from referencing images). Keep this as-is but be aware BuildKit is
@@ -70,6 +62,19 @@ RUN apt-get update && \
         python3-dev && \
     rm -rf /var/lib/apt/lists/*
 
+# Django required envs, they're fake!
+ENV DJANGO_SETTINGS_MODULE="conf.settings.production" \
+    DOCKERIZED=True \
+    DEBUG=False \
+    DATABASE_URL="sqlite:///app.db" \
+    SENTRY_DSN="https://0000000000000000000000000000000@000000000000000000.ingest.us.sentry.io/0000000000000000" \
+    SECRET_KEY="FAKE"
+
+# Set python/runtime environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    UV_LINK_MODE="copy"
+
 COPY pyproject.toml uv.lock ./
 RUN --mount=type=cache,target=/root/.cache/uv,sharing=locked \
     uv sync --frozen --no-install-project --no-dev
@@ -79,10 +84,9 @@ COPY . .
 COPY --from=front /app/_static /app/_static
 
 # collectstatic and compilemessages in a single layer
-RUN uv run manage.py collectstatic --clear --noinput \
-    && uv run manage.py compilemessages --ignore /app/.venv/ \
-    && apt-get purge -y --auto-remove build-essential python3-dev \
-    && rm -rf /var/lib/apt/lists/*
+RUN SECRET_KEY=FAKE \
+    && uv run manage.py collectstatic --clear --noinput \
+    && uv run manage.py compilemessages --ignore=cache --ignore=.venv
 
 ###
 
@@ -92,8 +96,14 @@ FROM base
 RUN useradd -ms /bin/bash app
 COPY --from=build --chown=app:app /app /app
 
+# ensure entrypoint is executable
+RUN chmod +x /app/docker-entrypoint.sh
+
 # ensure virtualenv bin is on PATH
 ENV PATH="/app/.venv/bin:$PATH"
+
+# run migrations on startup
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 # switch to non-root user for runtime
 USER app:app
@@ -102,18 +112,4 @@ EXPOSE 80
 
 # assumes the server is running behind a reverse proxy (Nginx, AWS ALB, etc.)
 # set the `WEB_CONCURRENCY` environment variable to the number of workers you'd like to run
-CMD gunicorn \
-    conf.wsgi:application \
-    --bind 0.0.0.0:80 \
-    --worker-class gthread \
-    --workers 4 \
-    --threads 4 \
-    --timeout 60 \
-    --graceful-timeout 30 \
-    --max-requests 2000 \
-    --max-requests-jitter 200 \
-    --access-logfile - \
-    --error-logfile - \
-    --log-level info \
-    --forwarded-allow-ips "*" \
-    --worker-tmp-dir /dev/shm
+CMD ["gunicorn","conf.wsgi:application","--bind","0.0.0.0:80","--worker-class","gthread","--workers","4","--threads","4","--timeout","60","--graceful-timeout","30","--max-requests","2000","--max-requests-jitter","200","--access-logfile","-","--error-logfile","-","--log-level","info","--forwarded-allow-ips","*","--worker-tmp-dir","/dev/shm"]
