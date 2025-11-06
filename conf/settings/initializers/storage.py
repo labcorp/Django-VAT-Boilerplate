@@ -31,12 +31,6 @@ def _domain_to_urls(value: str) -> tuple[str, str]:
 provider = None
 if STORAGE_PROVIDER in ('spaces', 's3'):
     provider = STORAGE_PROVIDER
-elif USE_SPACES and not USE_S3:
-    provider = 'spaces'
-elif USE_S3 and not USE_SPACES:
-    provider = 's3'
-elif USE_SPACES and USE_S3:
-    provider = 'spaces'
 
 
 if provider:

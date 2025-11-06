@@ -1,11 +1,12 @@
 # Django VAT (Vite, Alpine.js and Tailwind) Boilerplate
 An awesome boilerplate to kickstart your next project with Django, Vite, Alpine.js, and Tailwind CSS. It’s designed for developers who want a fast, modern stack with a powerful backend and a sleek, reactive frontend — perfect for building beautiful, responsive web apps.
 
-![Python](https://img.shields.io/badge/python-3.11-blue)
+![Python](https://img.shields.io/badge/python-3.14-blue)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
+![Disclaimer](https://img.shields.io/badge/use_at_your_own_risk-no_guarantee-red)
 
 > **IMPORTANT:**  
-> • Python >= 3.13.* (UV can handle this)
+> • Python >= 3.14.* (UV can handle this)
 > • Docker setup is not ready for production, yet :)  
 
 ### Installed django APPs
@@ -26,7 +27,14 @@ An awesome boilerplate to kickstart your next project with Django, Vite, Alpine.
 5. Profit...
 
 It will create 2 containers (front and back)  
-**Tip**: Search for "awesome" is all files and change it with your new project's name.
+> **Tip**: Search for "awesome" is all files and change it with your new project's name.
+
+## Docker (production)
+0. Use template in `.env.example` to create environment variables
+1. Build with `docker build --no-cache -f Dockerfile -t IMAGE_NAME .`
+2. Deploy
+
+
 
 ## Debugging Django App in VSCode (.vscode folder included)
 Django App can be debugged attaching VSCode to the PTVSD server (launch.json is included in this boilerplate), so:
