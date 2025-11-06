@@ -59,6 +59,8 @@ ENV LANG="pt_BR.UTF-8" \
 # required when building this Dockerfile.
 COPY --from=ghcr.io/astral-sh/uv:0.4.22 /uv /uvx /bin/
 
+###
+
 FROM base AS build
 
 RUN apt-get update && \
@@ -81,6 +83,8 @@ RUN uv run manage.py collectstatic --clear --noinput \
     && uv run manage.py compilemessages --ignore /app/.venv/ \
     && apt-get purge -y --auto-remove build-essential python3-dev \
     && rm -rf /var/lib/apt/lists/*
+
+###
 
 FROM base
 
